@@ -1,0 +1,11 @@
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.exe
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.deps.json
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.runtimeconfig.json
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.runtimeconfig.dev.json
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.dll
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\bin\Debug\netcoreapp3.1\ChineseChess.pdb
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\obj\Debug\netcoreapp3.1\ChineseChess.csprojAssemblyReference.cache
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\obj\Debug\netcoreapp3.1\ChineseChess.AssemblyInfoInputs.cache
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\obj\Debug\netcoreapp3.1\ChineseChess.AssemblyInfo.cs
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\obj\Debug\netcoreapp3.1\ChineseChess.dll
+C:\Users\ZHONG Yiyang\Documents\ZHONG\Ecole\Y3\cs\ChineseChess\ChineseChess\obj\Debug\netcoreapp3.1\ChineseChess.pdb
