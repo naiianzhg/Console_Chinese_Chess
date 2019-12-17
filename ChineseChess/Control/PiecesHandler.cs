@@ -117,7 +117,6 @@ namespace ChineseChess.Control
                 calculateValidMoves(Board.getLastOriLocation());
             int[] chosenDestLocation = new int[2];
             bool isValid = true;
-            string confirmation;
 
             // In this loop the player will need to input a location until the right one is input
             do
@@ -145,9 +144,8 @@ namespace ChineseChess.Control
                         (GameRules.isChecked()[1] && Board.currentColour % 2 == 1))
                     {
                         DisplayMessage.displayMoveConfirmation();
-                        confirmation = Console.ReadLine();
                         // If the player does not confirm, then the input is invalid
-                        if (confirmation == "n") isValid = false;
+                        if (Console.ReadLine() == "n") isValid = false;
                     }
                     // Clear the confirmation message
                     Console.SetCursorPosition(0, 28);
@@ -169,9 +167,11 @@ namespace ChineseChess.Control
             // clear the checked message line
             Console.SetCursorPosition(0, 27);
             DisplayMessage.clearConsoleLine();
-
             // Update the pieces positions and current colour in Board
             moveTo(Board.getLastOriLocation(), chosenDestLocation);
+
+            // After moving display the regret message except for the 1 round
+            DisplayMessage.displayRegretMessage();
         }
 
         // The moving operation

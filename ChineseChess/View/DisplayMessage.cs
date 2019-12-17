@@ -11,7 +11,6 @@ namespace ChineseChess.View
         // Ask if the player want to regret last move
         public static void displayRegretMessage()
         {
-            string confirmation;
             // Display the chess board in console
             DisplayBoard.displayChessPanel();
 
@@ -22,19 +21,22 @@ namespace ChineseChess.View
             Console.SetCursorPosition(0, 24);
             clearConsoleLine();
             // Display the regret confirmation message
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Do you need to regret? (y/n) ");
-            Console.ResetColor();
-            confirmation = Console.ReadLine();
-            if (confirmation == "y") GameRules.regret();
+            // If the player has no chance for regret anymore, no need to show this message
+            if (Board.regretAmount[Board.currentColour % 2] > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                if (Board.regretAmount[Board.currentColour % 2] == 1)
+                    Console.Write("This is your last chance to regret, sure? (y/n) ");
+                else if (Board.regretAmount[Board.currentColour % 2] > 1)
+                    Console.Write("Do you need to regret? (y/n) ");
+                Console.ResetColor();
+                if (Console.ReadLine() == "y") GameRules.regret();
+            }
         }
 
         // Ask the player to choose a piece to move
         public static void displayAskChooseMessage()
         {
-            // Display the regret message except for the 1 round
-            if (Board.currentColour > 1) displayRegretMessage();
-
             // Display the chess board in console
             DisplayBoard.displayChessPanel();
             // Display the current colour

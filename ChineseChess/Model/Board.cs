@@ -8,7 +8,10 @@ namespace ChineseChess.Model
     class Board
     {
         public static Pieces[,] pieces { get; set; }
+        // The current colour of the game, odd for red, even for black
         public static int currentColour { get; set; }
+        // The amount for regret where regretAmount[0] = regretAmount for black, where as regretAmount[1] for red
+        public static int[] regretAmount { get; set; }
 
         // Store all the moving operation from the beginning to the end
         // Last original position list
@@ -24,6 +27,8 @@ namespace ChineseChess.Model
             currentColour = 1;
             lastOriLocationList = new List<int>();
             lastDestLocationList = new List<int>();
+            // each team has 3 chances to regret
+            regretAmount = new int[] { 3, 3 };
 
             // Initialize the pieces and store them in chess board
             // Store Soldiers

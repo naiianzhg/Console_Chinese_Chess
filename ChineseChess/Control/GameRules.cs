@@ -70,8 +70,15 @@ namespace ChineseChess.Control
         // Regret move
         public static void regret()
         {
-            PiecesHandler.moveTo(Board.getLastDestLocation(), Board.getLastOriLocation());
-            Board.changeTurn();
+            // if the player still has chances for regret
+            if (Board.regretAmount[Board.currentColour % 2] > 0)
+            {
+                PiecesHandler.moveTo(Board.getLastDestLocation(), Board.getLastOriLocation());
+                // Reduce of regret chance by 1
+                Board.regretAmount[Board.currentColour % 2]--;
+                // After regret, the current colour change back
+                Board.changeTurn();
+            }
         }
     }
 }
