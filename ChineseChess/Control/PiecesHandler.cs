@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ChineseChess.Model;
 using ChineseChess.View;
+using System.Linq; // List.Last()
 
 namespace ChineseChess.Control
 {
@@ -136,25 +137,8 @@ namespace ChineseChess.Control
                         throw new Exception("This move doesn't comply with the rule");
                     }
 
-                    // If the player enter a location that is not able to avoid being checked, warn the player
-                    // Assume the piece move to the chosen destination
-                    moveTo(Board.getLastOriLocation(), chosenDestLocation);
-                    // if is is the turn of the side being checked, the player need to confirme any dangerous move
-                    if ((GameRules.isChecked()[0] && Board.currentColour % 2 == 0) ||
-                        (GameRules.isChecked()[1] && Board.currentColour % 2 == 1))
-                    {
-                        DisplayMessage.displayMoveConfirmation();
-                        // If the player does not confirm, then the input is invalid
-                        if (Console.ReadLine() == "n") isValid = false;
-                    }
-                    // Clear the confirmation message
-                    Console.SetCursorPosition(0, 28);
-                    DisplayMessage.clearConsoleLine();
-                    // Anyhow, move the piece back to original position to continue
-                    moveTo(chosenDestLocation, Board.getLastOriLocation());
-
-                    // Save this chosen destination location as last destination location
-                    Board.addLastDestLocation(chosenDestLocation);
+                    // If the player enter a location that is not able to avoid being checked or that will cause a check, warn the player and ask for confirmation
+                    isValid = confirmDangerousMove(chosenDestLocation, isValid);
                 }
                 catch (Exception e)
                 {
@@ -174,14 +158,59 @@ namespace ChineseChess.Control
             DisplayMessage.displayRegretMessage();
         }
 
-        // The moving operation
+        // If the player enter a dangerous move (cause a checked to himself), ask for confirmation
+        public static bool confirmDangerousMove(int[] chosenDestLocation, bool isValid)
+        {
+
+            // Assume the piece move to the chosen destination, if any piece is eaten, store the piece so that it can be put back later
+            Pieces virtualEatenPiece = Board.pieces[chosenDestLocation[0], chosenDestLocation[1]];
+            tracelessMoveTo(Board.getLastOriLocation(), chosenDestLocation);
+            // If a team will be checked after moving and it is its turn at the same time, the player need to confirme the dangerous move
+            if (GameRules.isChecked()[Board.currentColour % 2])
+            {
+                DisplayMessage.displayMoveConfirmation();
+                // If the player does not confirm, then the input is invalid
+                if (Console.ReadLine() == "n")
+                {
+                    isValid = false;
+                    // Clear the exception message line when the user enter a right input
+                    Console.SetCursorPosition(0, 26);
+                    DisplayMessage.clearConsoleLine();
+                }
+            }
+            // Clear the confirmation message
+            Console.SetCursorPosition(0, 28);
+            DisplayMessage.clearConsoleLine();
+            // Anyhow, move the piece back to original position to continue
+            tracelessMoveTo(chosenDestLocation, Board.getLastOriLocation());
+            Board.pieces[chosenDestLocation[0], chosenDestLocation[1]] = virtualEatenPiece;
+
+            // Save this chosen destination location as last destination location
+            Board.addLastDestLocation(chosenDestLocation);
+
+            return isValid;
+        }
+
+        // The real moving operation, the eaten piece will be stored
         public static void moveTo(int[] oriLocation, int[] destLocation)
+        {
+            // Move the chosen piece to the destination and reset the original position to null
+            Pieces temp = Board.pieces[oriLocation[0], oriLocation[1]];
+            Board.pieces[oriLocation[0], oriLocation[1]] = null;
+            // If there is a piece in destLocation which will be eaten, store its position else store null
+            if (Board.pieces[destLocation[0], destLocation[1]] != null)
+                Board.addLastEatenPiece(Board.pieces[destLocation[0], destLocation[1]]);
+            else Board.addLastEatenPiece(null);
+            Board.pieces[destLocation[0], destLocation[1]] = temp;
+        }
+
+        // This virtualMoveTo method is for calculating dangerous move or regret move back, there is no eaten piece storing inside so that it is called traceless
+        public static void tracelessMoveTo(int[] oriLocation, int[] destLocation)
         {
             // Move the chosen piece to the destination and reset the original position to null
             Pieces temp = Board.pieces[oriLocation[0], oriLocation[1]];
             Board.pieces[oriLocation[0], oriLocation[1]] = null;
             Board.pieces[destLocation[0], destLocation[1]] = temp;
         }
-
     }
 }

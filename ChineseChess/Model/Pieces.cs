@@ -549,7 +549,7 @@ namespace ChineseChess.Model
             // Detecte if there exists a piece on the column between the two generals, if so it is blocked
             if (colour == 1)
             {
-                for (int row = location[0]+1; row <= 9; row++)
+                for (int row = location[0]-1; row >= Board.getBlkGeneralPosition()[0]; row--)
                 {
                     if (Board.pieces[row, location[1]] != null && Board.pieces[row, location[1]].GetType() != typeof(General))
                     {
@@ -559,7 +559,7 @@ namespace ChineseChess.Model
                 }
             } else
             {
-                for (int row = location[0]-1; row >= 0; row--)
+                for (int row = location[0]+1; row <= Board.getRedGeneralPosition()[0]; row++)
                 {
                     if (Board.pieces[row, location[1]] != null && Board.pieces[row, location[1]].GetType() != typeof(General))
                     {
@@ -571,39 +571,20 @@ namespace ChineseChess.Model
             return block;
         }
 
-        public List<int> addFlyingGeneral(int colour, int[] location, List<int> validMoves)
+        public List<int> addFlyingGeneral(int colour, List<int> validMoves)
         {
-            if (colour == 1)
+            int[] redGeneralPosition = Board.getRedGeneralPosition(), blkGeneralPosition = Board.getBlkGeneralPosition();
+            if (redGeneralPosition[1] == blkGeneralPosition[1])
             {
-                for (int row = 7; row <= 9; row++)
-                {
-                    if (Board.pieces[row, location[1]] != null && Board.pieces[row, location[1]].GetType() == typeof(General))
-                    {
-                        validMoves.Add(row * 10 + location[1]);
-                    }
-                }
-            }
-            else if (colour == 0)
-            {
-                for (int row = 3; row >= 0; row--)
-                {
-                    if (Board.pieces[row, location[1]] != null && Board.pieces[row, location[1]].GetType() == typeof(General))
-                    {
-                        validMoves.Add(row * 10 + location[1]);
-                    }
-                }
+                if (colour == 1) validMoves.Add(blkGeneralPosition[0] * 10 + blkGeneralPosition[1]);
+                else validMoves.Add(redGeneralPosition[0] * 10 + redGeneralPosition[1]);
             }
             return validMoves;
         }
 
         public List<int> addUpValidMove(int colour, int[] location, List<int> validMoves)
         {
-            if (colour == 1 && location[0] != 7 &&
-                (Board.pieces[location[0] - 1, location[1]] == null || Board.pieces[location[0] - 1, location[1]].colour != colour))
-            {
-                validMoves.Add((location[0] - 1) * 10 + location[1]);
-            }
-            else if (colour == 0 && location[0] != 0 &&
+            if (location[0] != 7 && location[0] != 0 &&
               (Board.pieces[location[0] - 1, location[1]] == null || Board.pieces[location[0] - 1, location[1]].colour != colour))
             {
                 validMoves.Add((location[0] - 1) * 10 + location[1]);
@@ -613,12 +594,7 @@ namespace ChineseChess.Model
 
         public List<int> addDownValidMove(int colour,int[] location, List<int> validMoves)
         {
-            if (colour == 1 && location[0] != 9 &&
-                (Board.pieces[location[0] + 1, location[1]] == null || Board.pieces[location[0] + 1, location[1]].colour != colour))
-            {
-                validMoves.Add((location[0] + 1) * 10 + location[1]);
-            }
-            else if (colour == 0 && location[0] != 2 &&
+            if (location[0] != 9 && location[0] != 2 &&
               (Board.pieces[location[0] + 1, location[1]] == null || Board.pieces[location[0] + 1, location[1]].colour != colour))
             {
                 validMoves.Add((location[0] + 1) * 10 + location[1]);
@@ -653,7 +629,7 @@ namespace ChineseChess.Model
             // Flying general
             if (!isBlocked(colour, location))
             {
-                validMoves = addFlyingGeneral(colour, location, validMoves);
+                validMoves = addFlyingGeneral(colour, validMoves);
             }
 
             // Upward moving

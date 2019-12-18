@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ChineseChess.Model;
 using ChineseChess.View;
+using System.Linq; // List.Last()
 
 namespace ChineseChess.Control
 {
@@ -36,14 +37,14 @@ namespace ChineseChess.Control
                     {
                         enermyLocation[0] = row;
                         enermyLocation[1] = col;
-                        if (Board.pieces[row, col].calculateValidMoves(enermyLocation).Contains(blkGeneralLocation[0] * 10 + blkGeneralLocation[1]))
+                        if (!chked[0] && Board.pieces[row, col].calculateValidMoves(enermyLocation).Contains(blkGeneralLocation[0] * 10 + blkGeneralLocation[1]))
                         {
                             chked[0] = true;
                             break;
                         }
                     }
                     // or once the valid moves of one black pieces contains the red general, the red is checked
-                    else if (Board.pieces[row, col] != null && Board.pieces[row, col].colour == 0)
+                    else if (!chked[1] && Board.pieces[row, col] != null && Board.pieces[row, col].colour == 0)
                     {
                         enermyLocation[0] = row;
                         enermyLocation[1] = col;
@@ -54,14 +55,13 @@ namespace ChineseChess.Control
                         }
                     }
                 }
-                // Exit of the first for loop
-                if (chked[0] || chked[1]) break;
             }
 
             return chked;
         }
 
         // TODO: checkmate
+        //      
         public static bool isCheckmate()
         {
             return false;
@@ -73,7 +73,14 @@ namespace ChineseChess.Control
             // if the player still has chances for regret
             if (Board.regretAmount[Board.currentColour % 2] > 0)
             {
-                PiecesHandler.moveTo(Board.getLastDestLocation(), Board.getLastOriLocation());
+                // Move back the piece
+                PiecesHandler.tracelessMoveTo(Board.getLastDestLocation(), Board.getLastOriLocation());
+                // If there is an eaten piece, put it back to the board, else put null
+                Board.pieces[Board.getLastDestLocation()[0], Board.getLastDestLocation()[1]] = Board.getLastEatenPiece();
+                // Remove the last element of lastOriLocationList, lastDestLocationList and lastEatenPieceList after regret
+                Board.removeLastOriLocation();
+                Board.removeLastDestLocation();
+                Board.removeLastEatenPiece();
                 // Reduce of regret chance by 1
                 Board.regretAmount[Board.currentColour % 2]--;
                 // After regret, the current colour change back

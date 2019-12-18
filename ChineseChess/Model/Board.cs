@@ -18,7 +18,9 @@ namespace ChineseChess.Model
         public static List<int> lastOriLocationList { get; set; }
         // Last destination position list
         public static List<int> lastDestLocationList { get; set; }
-        
+        // Last be-eaten piece
+        public static List<Pieces> lastEatenPieceList { get; set; }
+
         // In the constructor, we initialize all the pieces and put them in the board which is an array of pieces
         public Board()
         {
@@ -27,6 +29,7 @@ namespace ChineseChess.Model
             currentColour = 1;
             lastOriLocationList = new List<int>();
             lastDestLocationList = new List<int>();
+            lastEatenPieceList = new List<Pieces>();
             // each team has 3 chances to regret
             regretAmount = new int[] { 3, 3 };
 
@@ -81,7 +84,7 @@ namespace ChineseChess.Model
 
         public static void iniChessBoard()
         {
-            Board chessBoard = new Board();
+            new Board();
         }
 
         public static void changeTurn()
@@ -104,6 +107,12 @@ namespace ChineseChess.Model
             return lastOriLocation;
         }
 
+        // Remove last original location
+        public static void removeLastOriLocation()
+        {
+            lastOriLocationList.Remove(lastOriLocationList.Last());
+        }
+
         // After enter the destination location, save it
         public static void addLastDestLocation(int[] chosenLocation)
         {
@@ -117,6 +126,30 @@ namespace ChineseChess.Model
             lastDestLocation[0] = lastDestLocationList.Last() / 10;
             lastDestLocation[1] = lastDestLocationList.Last() % 10;
             return lastDestLocation;
+        }
+
+        // Remove last destination location
+        public static void removeLastDestLocation()
+        {
+            lastDestLocationList.Remove(lastDestLocationList.Last());
+        }
+
+        // Before eating any piece, store the pice
+        public static void addLastEatenPiece(Pieces eatenPiece)
+        {
+            lastEatenPieceList.Add(eatenPiece);
+        }
+        
+        // Get last eaten piece
+        public static Pieces getLastEatenPiece()
+        {
+            return lastEatenPieceList.Last();
+        }
+
+        // Remove last original location
+        public static void removeLastEatenPiece()
+        {
+            lastEatenPieceList.Remove(lastEatenPieceList.Last());
         }
 
         // Return the position of the Red General
@@ -139,6 +172,7 @@ namespace ChineseChess.Model
             }
             return redGeneralPosition;
         }
+
         // Return the position of the Black General
         public static int[] getBlkGeneralPosition()
         {
