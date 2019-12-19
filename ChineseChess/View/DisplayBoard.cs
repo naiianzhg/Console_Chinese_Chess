@@ -74,7 +74,7 @@ namespace ChineseChess.View
         public static void displayValidMove(int[] chosenPieceLocation)
         {
             // calculate the valid move of 
-            int[] validMoves = Board.pieces[chosenPieceLocation[0], chosenPieceLocation[1]].calculateValidMoves(chosenPieceLocation).ToArray();
+            int[] validMoves = Board.pieces[chosenPieceLocation[0], chosenPieceLocation[1]].calculatevalidMoveList(chosenPieceLocation).ToArray();
             foreach (int validMoveLocation in validMoves)
             {
                 Console.SetCursorPosition(4 * (validMoveLocation % 10) + 3, 2 * (validMoveLocation / 10) + 2);

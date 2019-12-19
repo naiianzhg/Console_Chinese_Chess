@@ -70,8 +70,6 @@ namespace ChineseChess.Control
                     // Convert the string location to integer location
                     // if the parseLocation did not throw any exception, formatly the input is correct
                     chosenOriLocation = parseLocation(Console.ReadLine(), out isValid);
-                    // Save this chosen original location as last original location
-                    Board.addLastOriLocation(chosenOriLocation);
 
                     // Check if the chosen Location is null
                     if (isValid && Board.pieces[chosenOriLocation[0], chosenOriLocation[1]] == null)
@@ -91,7 +89,7 @@ namespace ChineseChess.Control
                         }
 
                         //Check if the chosen piece has any possible move
-                        if (Board.pieces[chosenOriLocation[0], chosenOriLocation[1]].calculateValidMoves(chosenOriLocation).Count == 0)
+                        if (Board.pieces[chosenOriLocation[0], chosenOriLocation[1]].calculatevalidMoveList(chosenOriLocation).Count == 0)
                         {
                             isValid = false;
                             throw new Exception("This piece cannot move anywhere");
@@ -103,6 +101,10 @@ namespace ChineseChess.Control
                     DisplayMessage.displayException(e);
                 }
             } while (!isValid);
+
+            // When the player finally enter the right input, save this chosen original location as last original location
+            Board.addLastOriLocation(chosenOriLocation);
+
             // Clear the exception message line when the user enter a right input
             Console.SetCursorPosition(0, 26);
             DisplayMessage.clearConsoleLine();
@@ -115,7 +117,7 @@ namespace ChineseChess.Control
         public static void chooseDest()
         {
             List<int> validMove = Board.pieces[Board.getLastOriLocation()[0], Board.getLastOriLocation()[1]].
-                calculateValidMoves(Board.getLastOriLocation());
+                calculatevalidMoveList(Board.getLastOriLocation());
             int[] chosenDestLocation = new int[2];
             bool isValid = true;
 
@@ -145,6 +147,10 @@ namespace ChineseChess.Control
                     DisplayMessage.displayException(e);
                 }
             } while (!isValid);
+
+            // When the player finally enter the right input, save this chosen destination location as last destination location
+            Board.addLastDestLocation(chosenDestLocation);
+
             // Clear the exception message line when the user enter a right input
             Console.SetCursorPosition(0, 26);
             DisplayMessage.clearConsoleLine();
@@ -184,9 +190,6 @@ namespace ChineseChess.Control
             // Anyhow, move the piece back to original position to continue
             tracelessMoveTo(chosenDestLocation, Board.getLastOriLocation());
             Board.pieces[chosenDestLocation[0], chosenDestLocation[1]] = virtualEatenPiece;
-
-            // Save this chosen destination location as last destination location
-            Board.addLastDestLocation(chosenDestLocation);
 
             return isValid;
         }
