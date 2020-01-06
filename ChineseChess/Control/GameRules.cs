@@ -33,7 +33,7 @@ namespace ChineseChess.Control
                     // if the black is already confirmed as in check, no need for the other traversal
                     if (!chked[0] && Board.pieces[row, col] != null && Board.pieces[row, col].colour == 1)
                     {
-                        if (Board.pieces[row, col].calculatevalidMoveList(new int[] { row, col }).Contains(blkGeneralLocation[0] * 10 + blkGeneralLocation[1]))
+                        if (Board.pieces[row, col].calculateValidMoveList(new int[] { row, col }).Contains(blkGeneralLocation[0] * 10 + blkGeneralLocation[1]))
                         {
                             chked[0] = true;
                             break;
@@ -43,7 +43,7 @@ namespace ChineseChess.Control
                     // if the red is already confirmed as in check, no need for the other traversal
                     else if (!chked[1] && Board.pieces[row, col] != null && Board.pieces[row, col].colour == 0)
                     {
-                        if (Board.pieces[row, col].calculatevalidMoveList(new int[] { row, col }).Contains(redGeneralLocation[0] * 10 + redGeneralLocation[1]))
+                        if (Board.pieces[row, col].calculateValidMoveList(new int[] { row, col }).Contains(redGeneralLocation[0] * 10 + redGeneralLocation[1]))
                         {
                             chked[1] = true;
                             break;
@@ -74,7 +74,7 @@ namespace ChineseChess.Control
                         // among all the black pieces, check if they move to any of their validmoves that allows to avoid the check, if not it is checkmate
                         if (Board.pieces[row, col] != null && Board.pieces[row, col].colour == 0)
                         {
-                            validMoveList = Board.pieces[row, col].calculatevalidMoveList(new int[] { row, col });
+                            validMoveList = Board.pieces[row, col].calculateValidMoveList(new int[] { row, col });
                             // try every validmove in the validmove list
                             for (int i = 0; i < validMoveList.Count; i++)
                             {
@@ -108,7 +108,7 @@ namespace ChineseChess.Control
                         // among all the red pieces, check if they move to any of their validmoves that allows to avoid the check, if not it is checkmate
                         if (Board.pieces[row, col] != null && Board.pieces[row, col].colour == 1)
                         {
-                            validMoveList = Board.pieces[row, col].calculatevalidMoveList(new int[] { row, col });
+                            validMoveList = Board.pieces[row, col].calculateValidMoveList(new int[] { row, col });
                             // try every validmove in the validmove list
                             for (int i = 0; i < validMoveList.Count; i++)
                             {

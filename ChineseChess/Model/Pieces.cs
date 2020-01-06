@@ -21,7 +21,7 @@ namespace ChineseChess.Model
             this.type = type;
         }
 
-        public abstract List<int> calculatevalidMoveList (int[] location);
+        public abstract List<int> calculateValidMoveList (int[] location);
     } 
 
     class Soldier : Pieces
@@ -33,7 +33,7 @@ namespace ChineseChess.Model
             else url = "/Images/BlackSoldier.png";
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             // Initialize the valideMove List
             validMoveList = new List<int>();
@@ -149,7 +149,7 @@ namespace ChineseChess.Model
             return obj;
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             // Initialize the valideMove List
             validMoveList = new List<int>();
@@ -241,7 +241,7 @@ namespace ChineseChess.Model
             return validMoveList;
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             // Initialize the valideMove List
             validMoveList = new List<int>();
@@ -304,7 +304,7 @@ namespace ChineseChess.Model
             else url = "/Images/BlackHorse.png";
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             // Initialize the valideMove List
             validMoveList = new List<int>();
@@ -426,7 +426,7 @@ namespace ChineseChess.Model
             return validMoveList;
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             // Initialize the valideMove List
             validMoveList = new List<int>();
@@ -492,7 +492,7 @@ namespace ChineseChess.Model
             else url = "/Images/BlackAdvisor.png";
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             validMoveList = new List<int>();
 
@@ -622,7 +622,7 @@ namespace ChineseChess.Model
             return validMoveList;
         }
 
-        public override List<int> calculatevalidMoveList(int[] location)
+        public override List<int> calculateValidMoveList(int[] location)
         {
             validMoveList = new List<int>();
 

@@ -21,6 +21,7 @@ namespace ChineseChess
                     // Choose a piece and display the valid move
                     PiecesHandler.chooseOri();
                     isChosen = true;
+
                 } while (!isChosen);
                 isChosen = false;
 
@@ -33,12 +34,15 @@ namespace ChineseChess
                     // Display if there is a checked
                     DisplayMessage.displayChecked();
 
-                    // Change the current colour to another
-                    Board.changeTurn();
                 } while (!isMoved);
                 isMoved = false;
 
-            } while (true);
+            } while (!GameRules.isCheckmate());
+
+            Console.SetCursorPosition(0, 28);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nWINNER WINNER CHICKEN DINER!");
+            Console.ResetColor();
         }
     }
 }

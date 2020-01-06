@@ -73,8 +73,8 @@ namespace ChineseChess.View
         // Display the valid moves for the chosen piece
         public static void displayValidMove(int[] chosenPieceLocation)
         {
-            // calculate the valid move of 
-            int[] validMoves = Board.pieces[chosenPieceLocation[0], chosenPieceLocation[1]].calculatevalidMoveList(chosenPieceLocation).ToArray();
+            // calculate the valid move of the chosen piece
+            int[] validMoves = Board.pieces[chosenPieceLocation[0], chosenPieceLocation[1]].calculateValidMoveList(chosenPieceLocation).ToArray();
             foreach (int validMoveLocation in validMoves)
             {
                 Console.SetCursorPosition(4 * (validMoveLocation % 10) + 3, 2 * (validMoveLocation / 10) + 2);

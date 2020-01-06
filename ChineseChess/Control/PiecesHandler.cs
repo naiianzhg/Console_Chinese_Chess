@@ -89,7 +89,7 @@ namespace ChineseChess.Control
                         }
 
                         //Check if the chosen piece has any possible move
-                        if (Board.pieces[chosenOriLocation[0], chosenOriLocation[1]].calculatevalidMoveList(chosenOriLocation).Count == 0)
+                        if (Board.pieces[chosenOriLocation[0], chosenOriLocation[1]].calculateValidMoveList(chosenOriLocation).Count == 0)
                         {
                             isValid = false;
                             throw new Exception("This piece cannot move anywhere");
@@ -117,7 +117,7 @@ namespace ChineseChess.Control
         public static void chooseDest()
         {
             List<int> validMove = Board.pieces[Board.getLastOriLocation()[0], Board.getLastOriLocation()[1]].
-                calculatevalidMoveList(Board.getLastOriLocation());
+                calculateValidMoveList(Board.getLastOriLocation());
             int[] chosenDestLocation = new int[2];
             bool isValid = true;
 
@@ -162,6 +162,9 @@ namespace ChineseChess.Control
 
             // After moving display the regret message except for the 1 round
             DisplayMessage.displayRegretMessage();
+
+            // Change the current colour to another
+            Board.changeTurn();
         }
 
         // If the player enter a dangerous move (cause a checked to himself), ask for confirmation
